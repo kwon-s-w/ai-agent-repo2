@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="ko">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>경매 매수 검토</title>
+<link rel="stylesheet" href="/styles.css"></head>
+<body>
+<div class="workspace">
+<aside class="sidebar">
+  <a class="brand" href="#lookup">주거 경매 검토</a>
+  <nav class="view-links" aria-label="경매 검토 메뉴">
+    <a data-view="lookup" href="#lookup" aria-current="page">사건 조회·수집</a>
+    <a data-view="documents" href="#documents">문서·사진</a>
+    <a data-view="analysis" href="#analysis">AI 문서 분석</a>
+    <a data-view="location" href="#location">입지·계획</a>
+    <a data-view="purchase" href="#purchase">매수 조건</a>
+    <a data-view="opinion" href="#opinion">서류 검토 의견</a>
+  </nav>
+  <div class="sidebar-context">
+    <span>검토 중인 물건</span>
+    <strong id="active-case">수집한 물건 없음</strong>
+    <small id="active-court"></small>
+  </div>
+  <a class="court-link" href="https://www.courtauction.go.kr/" target="_blank" rel="noopener">법원경매정보 ↗</a>
+</aside>
+<main id="main-content">
+<div class="view" id="panel-lookup">
+<header class="view-head"><h1>사건 조회·수집</h1><p>아파트·빌라 경매의 공고, 문서와 사진을 수집합니다.</p></header>
+<section class="card"><div class="fields">
+<div><label for="court">법원</label><select id="court"><option>법원 목록 불러오는 중</option></select></div>
+<div><label for="case">사건번호</label><input id="case" placeholder="예: 2024타경12345" autocomplete="off"></div>
+<div><label for="item">물건번호</label><select id="item"><option value="1">1</option></select></div>
+</div><div class="actions"><button id="lookup" class="secondary">사건·물건 조회</button><button id="collect" disabled>선택 물건 자료 수집</button></div>
+<p class="small" id="selection">먼저 사건을 조회한 뒤 물건을 선택하세요. 현재 부동산 경매 사건을 지원합니다.</p>
+<div class="notice">문서 공개기간: 매각물건명세서는 매각기일 1주 전부터, 현황조사서·감정평가서는 2주 전부터 매각기일까지입니다. 사건에 따라 제공 여부가 다릅니다.</div>
+<p id="message" role="status"></p><pre id="progress" aria-live="polite"></pre>
+<a id="open-documents" class="hidden" href="#documents">현재 물건의 문서·사진 보기 ↗</a></section>
+</div>
+<div class="view" id="panel-documents" hidden>
+<header class="view-head"><h1>문서·사진</h1></header>
+<p id="documents-empty" class="card empty">수집한 물건이 없습니다. <a href="#lookup">사건 조회·수집으로 이동</a></p>
+<section id="result" class="hidden"></section>
+<div id="document-actions" class="actions hidden"><a class="button" href="#analysis">AI 문서 분석</a><a class="button secondary" href="#purchase">매수 조건 입력</a></div>
+</div>
+<div class="view" id="panel-purchase" hidden>
+<header class="view-head"><h1>매수 조건</h1><p>예산과 비용을 입력하고, 별도 증빙으로 확인한 권리 상태를 기록합니다.</p></header>
+<p id="purchase-empty" class="card empty">수집한 물건이 없습니다. <a href="#lookup">사건 조회·수집으로 이동</a></p>
+<section id="purchase" class="card hidden" aria-labelledby="purchase-title">
+  <h2 id="purchase-title">입력 비용과 권리 확인</h2>
+  <p id="purchase-case" class="small"></p>
+  <p id="purchase-sample" class="small"></p>
+  <form id="purchase-form">
+    <fieldset class="review-group">
+      <legend>목적과 입찰가 시나리오</legend>
+      <div class="review-grid">
+        <label>매수 목적 <select name="purpose"><option value="home">실거주</option><option value="rental">임대</option></select></label>
+        <label>총매수 예산 (만원) <input name="budget" type="number" min="1" step="1"></label>
+        <label>입찰가 1 (만원) <input name="bid1" type="number" min="1" step="1"></label>
+        <label>입찰가 2 (만원) <input name="bid2" type="number" min="1" step="1"></label>
+        <label>입찰가 3 (만원) <input name="bid3" type="number" min="1" step="1"></label>
+      </div>
+    </fieldset>
+    <fieldset class="review-group">
+      <legend>입찰가 외 비용</legend>
+      <p class="small">각 시나리오에 동일하게 적용하는 추정치입니다. 비용이 없다고 확인한 항목은 0, 미확인 항목은 빈칸으로 두세요.</p>
+      <div class="review-grid">
+        <label>취득·등기 (만원) <input name="acquisition" type="number" min="0" step="1"></label>
+        <label>수리 (만원) <input name="repair" type="number" min="0" step="1"></label>
+        <label>인도·권리 인수 (만원) <input name="handover" type="number" min="0" step="1"></label>
+        <label>초기 금융비용·기타·예비비 (만원) <input name="other" type="number" min="0" step="1"></label>
+      </div>
+    </fieldset>
+    <fieldset id="comparison-inputs" class="review-group" hidden>
+      <legend>직접 확인한 비교 거래</legend>
+      <p class="small">같은 단지·유사 면적의 거래를 골라 취소 여부를 확인한 뒤 추가하세요. <a href="https://rt.molit.go.kr/" target="_blank" rel="noopener noreferrer">국토교통부 실거래가 공개시스템 ↗</a></p>
+      <div id="comparisons"></div>
+      <div class="actions"><button id="add-comparison" type="button" class="secondary">비교 거래 추가</button></div>
+    </fieldset>
+    <fieldset class="review-group">
+      <legend>권리와 입주에 영향을 주는 확인 사항</legend>
+      <div class="review-grid">
+        <label>최신 등기 <select name="registry"><option value="unknown">미확인</option><option value="reviewed">자료 확인 완료</option><option value="issue">쟁점 있음</option></select></label>
+        <label>현재 점유·인도 <select name="occupancy"><option value="unknown">미확인</option><option value="reviewed">자료 확인 완료</option><option value="issue">쟁점 있음</option></select></label>
+        <label>낙찰자 인수 부담 <select name="liabilities"><option value="unknown">미확인</option><option value="reviewed">자료 확인 완료</option><option value="issue">쟁점 있음</option></select></label>
+      </div>
+    </fieldset>
+  </form>
+  <p id="purchase-storage" class="small" role="status"></p>
+  <div class="actions"><a class="button" href="#opinion">서류 검토 의견 보기</a></div>
+</section>
+</div>
+<div class="view" id="panel-analysis" hidden>
+<header class="view-head"><h1>AI 문서 분석</h1></header>
+<p id="analysis-empty" class="card empty">분석할 PDF가 없습니다. <a href="#documents">문서·사진 보기</a></p>
+<section id="analysis" class="card hidden" aria-labelledby="analysis-title">
+  <h2 id="analysis-title">문서에서 확인할 질문</h2>
+  <p id="analysis-case" class="small"></p>
+  <label for="analysis-question">이 물건에서 확인할 내용</label>
+  <input id="analysis-question" maxlength="600" placeholder="예: 입주 일정과 인수 비용을 확인하려면 어떤 자료가 필요한가요?">
+  <p class="small">비워 두면 주택 경매 문서 3종을 대조합니다. 질문과 검토용 발췌를 Gemini API에 보냅니다. 질문에 개인정보를 넣지 마세요.</p>
+  <button id="analyze">Gemini로 문서 분석</button>
+  <p id="analysis-message" role="status"></p>
+  <p id="analysis-latest-attempt" class="notice hidden" role="status"></p>
+  <details class="analysis-guide">
+    <summary>AI가 문서를 읽는 순서</summary>
+    <ol class="small">
+      <li><strong>발췌 준비</strong> PDF를 쪽별로 읽고 민감정보가 없는 검토 항목을 뽑습니다. 스캔은 원문 대조나 로컬 OCR로 발췌를 준비할 수 있습니다.</li>
+      <li><strong>자료 고르기</strong> Gemini가 관련 쪽을 검색해 읽습니다. 판단 요건이 필요하면 법령을 조회합니다.</li>
+      <li><strong>근거 대조</strong> 명세서의 권리 기재, 현황조사서의 조사 당시 점유, 감정평가서의 면적·평가 기준과 금액을 비교합니다.</li>
+      <li><strong>보고서 확정</strong> 프로그램이 인용한 문서, 쪽, 발췌가 실제 읽은 자료와 맞는지 검사합니다. 확인하지 못한 항목도 남깁니다.</li>
+    </ol>
+  </details>
+  <div id="ocr-controls" class="analysis-guide hidden">
+    <h3>감정평가서 로컬 OCR</h3>
+    <p class="small">이 컴퓨터에서 텍스트를 추출하는 단계입니다. 검토할 PDF 뷰어 쪽 번호를 입력하세요.</p>
+    <form id="ocr-form" class="ocr-form">
+      <label>쪽 번호 (최대 8쪽) <input id="ocr-pages" placeholder="예: 2, 6, 9" maxlength="60" required></label>
+      <button type="submit" id="ocr-run" class="secondary">선택 쪽 OCR</button>
+    </form>
+    <p id="ocr-message" class="small" role="status"></p>
+    <div id="ocr-result"></div>
+  </div>
+  <div id="analysis-reviewed-example"></div>
+  <div id="analysis-report"></div>
+</section>
+</div>
+<div class="view" id="panel-location" hidden>
+<header class="view-head"><h1>입지·계획</h1><p>아파트와 빌라에서 확인할 자료와 판단 기준입니다.</p></header>
+<section class="card" aria-labelledby="housing-criteria-title">
+  <h2 id="housing-criteria-title">주택 유형별 확인 기준</h2>
+  <div class="review-table location-table"><table>
+    <thead><tr><th scope="col">항목</th><th scope="col">아파트</th><th scope="col">빌라 · 연립·다세대</th></tr></thead>
+    <tbody>
+      <tr><th scope="row">건물과 비용</th><td>관리비와 공용시설, 주차, 수리 필요를 확인합니다. 공개 단지는 K-apt에서 관리비를 확인할 수 있습니다.</td><td>건축물대장 용도·위반 표시, 등기 대지권, 실제 주차와 누수·환기 등을 대조합니다.</td></tr>
+      <tr><th scope="row">현재 생활</th><td colspan="2">집에서 출발해 통근 경로의 도보 구간, 환승과 시간대를 확인합니다. 필요에 따라 통학 경로, 야간 소음과 장보기 동선을 현장에서 대조합니다.</td></tr>
+    </tbody>
+  </table></div>
+  <p class="small"><a href="https://www.k-apt.go.kr/" target="_blank" rel="noopener">공동주택 관리정보 ↗</a> ·
+    <a href="https://www.gov.kr/mw/AA020InfoCappView.do?CappBizCD=15000000098" target="_blank" rel="noopener">건축물대장 열람 ↗</a></p>
+</section>
+<section class="card" aria-labelledby="plans-title">
+  <h2 id="plans-title">개발계획과 정책 확인 순서</h2>
+  <ol class="review-steps">
+    <li><strong>대상 필지 확인</strong><p>토지이음에서 해당 지번의 용도지역, 지정 구역, 고시와 도면을 확인합니다.</p><a href="https://www.eum.go.kr/web/am/visit.jsp" target="_blank" rel="noopener">토지이음 확인 방법 ↗</a></li>
+    <li><strong>고시와 사업 단계 확인</strong><p>광역·도시기본계획의 장기 방향과 해당 사업의 결정고시·인허가·착공을 구분합니다. 대상 구역, 고시번호·날짜, 현재 단계와 일정의 근거를 확인합니다.</p><a href="https://urban.seoul.go.kr/view/new/main.html" target="_blank" rel="noopener">서울 도시계획 고시 ↗</a> · <a href="https://cleanup.seoul.go.kr/cleanup/view/redevelop.do" target="_blank" rel="noopener">서울 재개발 절차 ↗</a></li>
+    <li><strong>매수 시점에 적용되는 조건 확인</strong><p>취득·자금조달 조건은 매수일, 지역, 주택 유형과 본인 조건으로 확인합니다. 도시계획 고시와 함께 대출기관의 실제 적용 조건을 확인합니다.</p></li>
+  </ol>
+  <p class="small">이 탭은 직접 확인할 기준과 출처를 제공합니다. 물건별 고시와 정책 적용은 현재 직접 확인 단계입니다.</p>
+</section>
+</div>
+<div class="view" id="panel-opinion" hidden>
+<header class="view-head split-head"><div><h1>서류 검토 의견</h1><p>문서에 남은 쟁점과 필요한 증빙을 확인합니다.</p></div><a href="#purchase" class="button secondary">확인 상태와 비용 수정</a></header>
+<p id="opinion-empty" class="card empty">수집한 물건이 없습니다. <a href="#lookup">사건 조회·수집으로 이동</a></p>
+<section id="opinion" class="hidden" aria-label="문서와 별도 증빙 확인 의견">
+  <div id="purchase-summary" class="card" aria-live="polite"></div>
+  <div id="purchase-reviewed-facts" class="card evidence-card"></div>
+  <div id="purchase-evidence" class="card evidence-card"></div>
+</section>
+</div>
+</main>
+</div>
+<script type="module" src="/app.js"></script>
+</body></html>

@@ -1,0 +1,242 @@
+[
+  {
+    "name": "서울중앙지방법원",
+    "search_value": "서울중앙지방법원"
+  },
+  {
+    "name": "서울동부지방법원",
+    "search_value": "서울동부지방법원"
+  },
+  {
+    "name": "서울서부지방법원",
+    "search_value": "서울서부지방법원"
+  },
+  {
+    "name": "서울남부지방법원",
+    "search_value": "서울남부지방법원"
+  },
+  {
+    "name": "서울북부지방법원",
+    "search_value": "서울북부지방법원"
+  },
+  {
+    "name": "의정부지방법원",
+    "search_value": "의정부지방법원"
+  },
+  {
+    "name": "고양지원",
+    "search_value": "고양지원"
+  },
+  {
+    "name": "남양주지원",
+    "search_value": "남양주지원"
+  },
+  {
+    "name": "인천지방법원",
+    "search_value": "인천지방법원"
+  },
+  {
+    "name": "부천지원",
+    "search_value": "부천지원"
+  },
+  {
+    "name": "수원지방법원",
+    "search_value": "수원지방법원"
+  },
+  {
+    "name": "성남지원",
+    "search_value": "성남지원"
+  },
+  {
+    "name": "여주지원",
+    "search_value": "여주지원"
+  },
+  {
+    "name": "평택지원",
+    "search_value": "평택지원"
+  },
+  {
+    "name": "안산지원",
+    "search_value": "안산지원"
+  },
+  {
+    "name": "안양지원",
+    "search_value": "안양지원"
+  },
+  {
+    "name": "춘천지방법원",
+    "search_value": "춘천지방법원"
+  },
+  {
+    "name": "강릉지원",
+    "search_value": "강릉지원"
+  },
+  {
+    "name": "원주지원",
+    "search_value": "원주지원"
+  },
+  {
+    "name": "속초지원",
+    "search_value": "속초지원"
+  },
+  {
+    "name": "영월지원",
+    "search_value": "영월지원"
+  },
+  {
+    "name": "청주지방법원",
+    "search_value": "청주지방법원"
+  },
+  {
+    "name": "충주지원",
+    "search_value": "충주지원"
+  },
+  {
+    "name": "제천지원",
+    "search_value": "제천지원"
+  },
+  {
+    "name": "영동지원",
+    "search_value": "영동지원"
+  },
+  {
+    "name": "대전지방법원",
+    "search_value": "대전지방법원"
+  },
+  {
+    "name": "홍성지원",
+    "search_value": "홍성지원"
+  },
+  {
+    "name": "논산지원",
+    "search_value": "논산지원"
+  },
+  {
+    "name": "천안지원",
+    "search_value": "천안지원"
+  },
+  {
+    "name": "공주지원",
+    "search_value": "공주지원"
+  },
+  {
+    "name": "서산지원",
+    "search_value": "서산지원"
+  },
+  {
+    "name": "대구지방법원",
+    "search_value": "대구지방법원"
+  },
+  {
+    "name": "안동지원",
+    "search_value": "안동지원"
+  },
+  {
+    "name": "경주지원",
+    "search_value": "경주지원"
+  },
+  {
+    "name": "김천지원",
+    "search_value": "김천지원"
+  },
+  {
+    "name": "상주지원",
+    "search_value": "상주지원"
+  },
+  {
+    "name": "의성지원",
+    "search_value": "의성지원"
+  },
+  {
+    "name": "영덕지원",
+    "search_value": "영덕지원"
+  },
+  {
+    "name": "포항지원",
+    "search_value": "포항지원"
+  },
+  {
+    "name": "대구서부지원",
+    "search_value": "대구서부지원"
+  },
+  {
+    "name": "부산지방법원",
+    "search_value": "부산지방법원"
+  },
+  {
+    "name": "부산동부지원",
+    "search_value": "부산동부지원"
+  },
+  {
+    "name": "부산서부지원",
+    "search_value": "부산서부지원"
+  },
+  {
+    "name": "울산지방법원",
+    "search_value": "울산지방법원"
+  },
+  {
+    "name": "창원지방법원",
+    "search_value": "창원지방법원"
+  },
+  {
+    "name": "마산지원",
+    "search_value": "마산지원"
+  },
+  {
+    "name": "진주지원",
+    "search_value": "진주지원"
+  },
+  {
+    "name": "통영지원",
+    "search_value": "통영지원"
+  },
+  {
+    "name": "밀양지원",
+    "search_value": "밀양지원"
+  },
+  {
+    "name": "거창지원",
+    "search_value": "거창지원"
+  },
+  {
+    "name": "광주지방법원",
+    "search_value": "광주지방법원"
+  },
+  {
+    "name": "목포지원",
+    "search_value": "목포지원"
+  },
+  {
+    "name": "장흥지원",
+    "search_value": "장흥지원"
+  },
+  {
+    "name": "순천지원",
+    "search_value": "순천지원"
+  },
+  {
+    "name": "해남지원",
+    "search_value": "해남지원"
+  },
+  {
+    "name": "전주지방법원",
+    "search_value": "전주지방법원"
+  },
+  {
+    "name": "군산지원",
+    "search_value": "군산지원"
+  },
+  {
+    "name": "정읍지원",
+    "search_value": "정읍지원"
+  },
+  {
+    "name": "남원지원",
+    "search_value": "남원지원"
+  },
+  {
+    "name": "제주지방법원",
+    "search_value": "제주지방법원"
+  }
+]
